@@ -2,10 +2,12 @@ package com.example.p07_smsretriever;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.PermissionChecker;
 import androidx.fragment.app.Fragment;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FragmentFirst extends Fragment {
 
@@ -66,5 +69,17 @@ public class FragmentFirst extends Fragment {
             }
         });
         return view;
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 0: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    b1.performClick();
+                } else {
+                    Toast.makeText(getActivity(), "Permission Not Granted", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 }
